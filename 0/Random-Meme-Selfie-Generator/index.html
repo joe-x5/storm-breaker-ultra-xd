@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Random Meme Selfie Generator 😆📸</title>
+  <!-- Favicon -->
+  <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/2922/2922510.png" type="image/png">
+  <style>
+    body {
+      background: #333;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 0;
+      padding: 20px;
+    }
+    h1 {
+      margin-top: 20px;
+      font-size: 2.5em;
+    }
+    p {
+      font-size: 1.2em;
+    }
+    #videoContainer {
+      position: relative;
+      display: inline-block;
+    }
+    video {
+      width: 80%;
+      max-width: 400px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    }
+    canvas {
+      display: none;
+      margin-top: 20px;
+      border: 5px solid #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    }
+    button {
+      background: #ff4081;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      font-size: 1.2em;
+      cursor: pointer;
+      border-radius: 5px;
+      margin: 20px 10px;
+    }
+    button:hover {
+      background: #e91e63;
+    }
+  </style>
+</head>
+<body>
+  <h1>Random Meme Selfie Generator</h1>
+  <p>Capture a selfie and get a funny meme caption overlaid!</p>
+  
+  <div id="videoContainer">
+    <video id="video" autoplay></video>
+  </div>
+  
+  <br>
+  <button id="capture">Take Selfie</button>
+  <br>
+  <canvas id="memeCanvas"></canvas>
+  <br>
+  <button id="download" style="display:none;">Download Meme</button>
+  
+  <script>
+    // List of random meme captions
+    const captions = [
+      "That moment when you realize...",
+      "When life gives you lemons, make lemonade!",
+      "Me trying to be productive...",
+      "Why so serious?",
+      "Keep calm and carry on... sleeping.",
+      "Do it for the 'gram!",
+      "When you laugh at your own jokes.",
+      "Not today, world.",
+      "Just another day in paradise!",
+      "Oops, I did it again!"
+    ];
+    
+    const video = document.getElementById("video");
+    const canvas = document.getElementById("memeCanvas");
+    const captureBtn = document.getElementById("capture");
+    const downloadBtn = document.getElementById("download");
+    
+    // Get camera access
+    navigator.mediaDevices.getUserMedia({ video: true })
+      .then(stream => {
+        video.srcObject = stream;
+        video.play();
+      })
+      .catch(err => {
+        console.error("Error accessing camera:", err);
+        alert("Camera access is required for the Meme Selfie Generator.");
+      });
+    
+    // Capture selfie and add meme caption
+    captureBtn.addEventListener("click", () => {
+      // Set canvas size to video size
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+      
+      const ctx = canvas.getContext("2d");
+      // Draw the video frame on the canvas
+      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+      
+      // Choose a random caption
+      const caption = captions[Math.floor(Math.random() * captions.length)];
+      
+      // Set meme-style text (Impact font, white with black stroke)
+      ctx.font = "bold 40px Impact";
+      ctx.textAlign = "center";
+      ctx.strokeStyle = "black";
+      ctx.lineWidth = 4;
+      ctx.fillStyle = "white";
+      
+      // Calculate position for the caption (bottom center)
+      const x = canvas.width / 2;
+      const y = canvas.height - 50;
+      
+      // Draw the text with stroke and fill for better visibility
+      ctx.strokeText(caption, x, y);
+      ctx.fillText(caption, x, y);
+      
+      // Show the canvas and download button
+      canvas.style.display = "block";
+      downloadBtn.style.display = "inline-block";
+    });
+    
+    // Download meme image
+    downloadBtn.addEventListener("click", () => {
+      const dataURL = canvas.toDataURL("image/png");
+      const link = document.createElement("a");
+      link.href = dataURL;
+      link.download = "meme-selfie.png";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    });
+  </script>
+</body>
+</html>
