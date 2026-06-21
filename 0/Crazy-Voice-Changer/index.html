@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Crazy Voice Changer 🎤🤣</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #ff5722;
+            color: white;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            margin-top: 20px;
+        }
+        button {
+            background-color: #009688;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            margin: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 1.1em;
+        }
+        button:hover {
+            background-color: #00796b;
+        }
+        #effects-container {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Crazy Voice Changer 🎤🤣</h1>
+    <p>Record your voice and apply hilarious effects!</p>
+
+    <button id="record">🎙️ Start Recording</button>
+    <button id="stop" disabled>⏹️ Stop</button>
+    <button id="download" disabled>⬇️ Download</button>
+
+    <h3>Apply Funny Effect:</h3>
+    <div id="effects-container">
+        <button id="chipmunk">🐿️ Chipmunk</button>
+        <button id="demon">👹 Demon</button>
+        <button id="echo">👻 Echo</button>
+        <button id="robot">🤖 Robot</button>
+        <button id="reverse">🔄 Reverse</button>
+    </div>
+
+    <h3>Listen to Your Funny Voice:</h3>
+    <audio id="audio" controls></audio>
+
+    <script>
+        let mediaRecorder;
+        let audioChunks = [];
+        let audioBlob;
+        let audioURL;
+        const audioElement = document.getElementById("audio");
+
+        const recordButton = document.getElementById("record");
+        const stopButton = document.getElementById("stop");
+        const downloadButton = document.getElementById("download");
+
+        // Start recording
+        recordButton.addEventListener("click", async () => {
+            const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+            mediaRecorder = new MediaRecorder(stream);
+            audioChunks = [];
+
+            mediaRecorder.ondataavailable = event => {
+                audioChunks.push(event.data);
+            };
+
+            mediaRecorder.onstop = () => {
+                audioBlob = new Blob(audioChunks, { type: "audio/wav" });
+                audioURL = URL.createObjectURL(audioBlob);
+                audioElement.src = audioURL;
+                downloadButton.disabled = false;
+            };
+
+            mediaRecorder.start();
+            recordButton.disabled = true;
+            stopButton.disabled = false;
+        });
+
+        // Stop recording
+        stopButton.addEventListener("click", () => {
+            mediaRecorder.stop();
+            recordButton.disabled = false;
+            stopButton.disabled = true;
+        });
+
+        // Download recording
+        downloadButton.addEventListener("click", () => {
+            const a = document.createElement("a");
+            a.href = audioURL;
+            a.download = "funny-voice.wav";
+            a.click();
+        });
+
+        // Apply funny effects using Web Audio API
+        function applyEffect(effect) {
+            if (!audioBlob) return alert("Please record your voice first! 🎤");
+
+            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            const source = audioContext.createBufferSource();
+
+            audioBlob.arrayBuffer().then(arrayBuffer => {
+                audioContext.decodeAudioData(arrayBuffer, buffer => {
+                    source.buffer = buffer;
+
+                    let filter = audioContext.createBiquadFilter();
+                    let gainNode = audioContext.createGain();
+                    let delayNode = audioContext.createDelay();
+
+                    switch (effect) {
+                        case "chipmunk":
+                            source.playbackRate.value = 2; // Speed up = Chipmunk sound
+                            break;
+                        case "demon":
+                            source.playbackRate.value = 0.5; // Slow down = Deep Demon voice
+                            break;
+                        case "echo":
+                            delayNode.delayTime.value = 0.3;
+                            source.connect(delayNode);
+                            delayNode.connect(audioContext.destination);
+                            break;
+                        case "robot":
+                            filter.type = "highpass";
+                            filter.frequency.value = 1000;
+                            source.connect(filter);
+                            filter.connect(audioContext.destination);
+                            break;
+                        case "reverse":
+                            buffer.getChannelData(0).reverse();
+                            break;
+                    }
+
+                    source.connect(audioContext.destination);
+                    source.start();
+                });
+            });
+        }
+
+        document.getElementById("chipmunk").addEventListener("click", () => applyEffect("chipmunk"));
+        document.getElementById("demon").addEventListener("click", () => applyEffect("demon"));
+        document.getElementById("echo").addEventListener("click", () => applyEffect("echo"));
+        document.getElementById("robot").addEventListener("click", () => applyEffect("robot"));
+        document.getElementById("reverse").addEventListener("click", () => applyEffect("reverse"));
+    </script>
+
+</body>
+</html>
