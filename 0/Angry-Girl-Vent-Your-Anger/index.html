@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Angry Girl - Vent Your Anger</title>
+  <!-- Favicon -->
+  <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/685/685686.png" type="image/png">
+  <style>
+    body {
+      background: #ffcccc;
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      text-align: center;
+      margin: 0;
+      padding: 20px;
+    }
+    h1 {
+      font-size: 2.5em;
+      color: #cc0000;
+      margin-bottom: 10px;
+    }
+    #angryGirlImg {
+      width: 300px;
+      max-width: 90%;
+      border: 5px solid #cc0000;
+      border-radius: 10px;
+      margin-bottom: 20px;
+    }
+    #angerMeter {
+      width: 80%;
+      max-width: 400px;
+      height: 30px;
+      background: #ddd;
+      border-radius: 15px;
+      margin: 20px auto;
+      overflow: hidden;
+      border: 2px solid #cc0000;
+    }
+    #angerFill {
+      height: 100%;
+      width: 0;
+      background: #ff0000;
+      transition: width 0.3s;
+    }
+    #quote {
+      font-size: 1.2em;
+      margin: 20px;
+      min-height: 50px;
+      color: #660000;
+    }
+    button {
+      padding: 15px 30px;
+      font-size: 1.2em;
+      border: none;
+      border-radius: 10px;
+      background: #cc0000;
+      color: white;
+      cursor: pointer;
+      margin: 10px;
+    }
+    button:hover {
+      background: #b30000;
+    }
+  </style>
+</head>
+<body>
+  <h1>Angry Girl - Vent Your Anger</h1>
+  <!-- Replace the src with your desired image URL -->
+  <img id="angryGirlImg" src="https://via.placeholder.com/300x400?text=Angry+Girl" alt="Angry Girl">
+  
+  <div id="angerMeter">
+    <div id="angerFill"></div>
+  </div>
+  
+  <p id="quote">How angry are you?</p>
+  
+  <button id="ventButton">I am angry!</button>
+  <button id="calmButton">Calm Down</button>
+  
+  <script>
+    const ventButton = document.getElementById('ventButton');
+    const calmButton = document.getElementById('calmButton');
+    const angerFill = document.getElementById('angerFill');
+    const quote = document.getElementById('quote');
+    
+    let angerLevel = 0;
+    
+    const angryQuotes = [
+      "I'm so angry I could scream!",
+      "My blood is boiling!",
+      "I can't even...!",
+      "This is outrageous!",
+      "You better watch out!",
+      "I'm fuming mad!",
+      "I just lost it!",
+      "That's it, I've had enough!"
+    ];
+    
+    ventButton.addEventListener('click', () => {
+      // Increase anger by a random amount between 5 and 25
+      angerLevel += Math.floor(Math.random() * 21) + 5;
+      if (angerLevel > 100) angerLevel = 100;
+      angerFill.style.width = angerLevel + '%';
+      
+      // Display a random angry quote with current anger percentage
+      const randomIndex = Math.floor(Math.random() * angryQuotes.length);
+      quote.innerText = angryQuotes[randomIndex] + " (" + angerLevel + "%)";
+      
+      // When anger reaches 100%, trigger an "explosion" alert and reset
+      if (angerLevel >= 100) {
+        alert("Boom! Explosive anger!");
+        angerLevel = 0;
+        angerFill.style.width = '0%';
+        quote.innerText = "Phew... I'm calm now.";
+      }
+    });
+    
+    calmButton.addEventListener('click', () => {
+      // Reduce anger by 20 units (but not below 0)
+      angerLevel -= 20;
+      if (angerLevel < 0) angerLevel = 0;
+      angerFill.style.width = angerLevel + '%';
+      quote.innerText = "Getting better... (" + angerLevel + "%)";
+    });
+  </script>
+</body>
+</html>
