@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Angry Girl Game - Fling the Fury!</title>
+  <!-- Favicon -->
+  <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/685/685686.png" type="image/png">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(to bottom, #87CEEB, #f4f4f4);
+      overflow: hidden;
+      font-family: Arial, sans-serif;
+    }
+    #gameCanvas {
+      display: block;
+    }
+    .scoreboard {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      font-size: 24px;
+      color: #333;
+      background: rgba(255, 255, 255, 0.8);
+      padding: 5px 10px;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+  <div class="scoreboard" id="scoreboard">Score: 0</div>
+  <canvas id="gameCanvas"></canvas>
+
+  <!-- Matter.js library from CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
+  <script>
+    // Module aliases for Matter.js
+    const Engine = Matter.Engine,
+          Render = Matter.Render,
+          Runner = Matter.Runner,
+          Bodies = Matter.Bodies,
+          Composite = Matter.Composite,
+          Constraint = Matter.Constraint,
+          MouseConstraint = Matter.MouseConstraint,
+          Mouse = Matter.Mouse,
+          Events = Matter.Events,
+          Body = Matter.Body;
+
+    // Create the engine and world
+    const engine = Engine.create();
+    const world = engine.world;
+
+    // Get canvas and set its dimensions
+    const canvas = document.getElementById('gameCanvas');
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+    canvas.width = width;
+    canvas.height = height;
+
+    // Create the renderer
+    const render = Render.create({
+      canvas: canvas,
+      engine: engine,
+      options: {
+        width: width,
+        height: height,
+        wireframes: false,
+        background: 'transparent'
+      }
+    });
+
+    Render.run(render);
+
+    // Create the runner
+    const runner = Runner.create();
+    Runner.run(runner, engine);
+
+    // Create ground
+    const ground = Bodies.rectangle(width/2, height - 20, width, 40, {
+      isStatic: true,
+      render: { fillStyle: '#86592d' }
+    });
+    Composite.add(world, ground);
+
+    // Score
+    let score = 0;
+    const scoreboard = document.getElementById('scoreboard');
+
+    // Create target blocks (a simple tower)
+    const blocks = [];
+    const blockWidth = 60, blockHeight = 60;
+    const startX = width - 250;
+    const startY = height - 60;
+    for (let i = 0; i < 5; i++) {
+      const block = Bodies.rectangle(startX, startY - i * blockHeight, blockWidth, blockHeight, {
+        restitution: 0.4,
+        render: { fillStyle: '#d35400' }
+      });
+      blocks.push(block);
+    }
+    Composite.add(world, blocks);
+
+    // Create the Angry Girl projectile using a circle with an image texture.
+    // Replace the texture URL with your own if desired.
+    const angryGirl = Bodies.circle(200, height - 200, 30, {
+      density: 0.004,
+      restitution: 0.6,
+      render: {
+        sprite: {
+          texture: 'https://via.placeholder.com/80x80.png?text=Angry+Girl',
+          xScale: 0.75,
+          yScale: 0.75
+        }
+      }
+    });
+    Composite.add(world, angryGirl);
+
+    // Create a slingshot constraint (the "sling")
+    const sling = Constraint.create({
+      pointA: { x: 200, y: height - 200 },
+      bodyB: angryGirl,
+      stiffness: 0.05,
+      render: {
+        strokeStyle: '#000',
+        lineWidth: 3
+      }
+    });
+    Composite.add(world, sling);
+
+    // Add mouse control to allow dragging the projectile
+    const mouse = Mouse.create(render.canvas);
+    const mouseConstraint = MouseConstraint.create(engine, {
+      mouse: mouse,
+      constraint: {
+        stiffness: 0.02,
+        render: { visible: false }
+      }
+    });
+    Composite.add(world, mouseConstraint);
+    render.mouse = mouse;
+
+    // When the projectile is released, detach it from the sling after a short delay
+    Events.on(mouseConstraint, 'enddrag', function(event) {
+      if (event.body === angryGirl) {
+        setTimeout(() => {
+          sling.bodyB = null;
+        }, 100);
+      }
+    });
+
+    // Monitor when the projectile slows down or leaves the screen, then reset it.
+    Events.on(engine, 'afterUpdate', function() {
+      // If the projectile is off-screen or nearly stationary (and not attached to the sling), reset it.
+      if (angryGirl.position.x > width || angryGirl.position.y > height || (angryGirl.speed < 0.05 && !sling.bodyB)) {
+        // Optionally, you can check if blocks have been hit and add more score.
+        score += 10;
+        scoreboard.innerText = "Score: " + score;
+        // Reset the projectile to the starting position and reattach it to the sling.
+        Body.setPosition(angryGirl, { x: 200, y: height - 200 });
+        Body.setVelocity(angryGirl, { x: 0, y: 0 });
+        sling.bodyB = angryGirl;
+      }
+    });
+
+    // Adjust canvas size on window resize
+    window.addEventListener('resize', function() {
+      const width = window.innerWidth;
+      const height = window.innerHeight;
+      render.bounds.max.x = width;
+      render.bounds.max.y = height;
+      render.options.width = width;
+      render.options.height = height;
+      render.canvas.width = width;
+      render.canvas.height = height;
+    });
+  </script>
+</body>
+</html>
