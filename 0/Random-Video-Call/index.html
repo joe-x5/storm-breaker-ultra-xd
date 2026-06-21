@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Random Video Call 📹</title>
+    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-database-compat.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #222;
+            color: white;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            margin-top: 20px;
+        }
+        #video-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        video {
+            width: 45%;
+            max-width: 400px;
+            border: 3px solid white;
+            border-radius: 10px;
+        }
+        button {
+            background-color: #ff5722;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            margin: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 1.1em;
+        }
+        button:hover {
+            background-color: #ff9800;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Random Video Call 📹</h1>
+    <button id="startCall">🔀 Find a Random Partner</button>
+    
+    <div id="video-container">
+        <video id="localVideo" autoplay playsinline muted></video>
+        <video id="remoteVideo" autoplay playsinline></video>
+    </div>
+
+    <script>
+        // Firebase Setup
+        const firebaseConfig = {
+            apiKey: "AIzaSyCE5gLp99K4IUq6V-BhlmgOcTtTjjG6WpU",
+            authDomain: "chat-app-9d3d2.firebaseapp.com",
+            databaseURL: "https://chat-app-9d3d2-default-rtdb.firebaseio.com",
+            projectId: "chat-app-9d3d2",
+            storageBucket: "chat-app-9d3d2.firebasestorage.app",
+            messagingSenderId: "110218700281",
+            appId: "1:110218700281:web:470b92a7e4b223a0660928"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
+
+        // WebRTC Setup
+        const localVideo = document.getElementById("localVideo");
+        const remoteVideo = document.getElementById("remoteVideo");
+        const startCallBtn = document.getElementById("startCall");
+        let localStream, peerConnection;
+        const servers = { iceServers: [{ urls: "stun:stun.l.google.com:19302" }] };
+
+        async function startVideo() {
+            localStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+            localVideo.srcObject = localStream;
+        }
+
+        async function startCall() {
+            startCallBtn.innerText = "🔄 Searching...";
+            const userRef = db.ref("users").push({ waiting: true });
+
+            userRef.onDisconnect().remove();
+
+            db.ref("users").once("value", async (snapshot) => {
+                const users = snapshot.val();
+                const availableUser = Object.keys(users).find(uid => uid !== userRef.key && users[uid].waiting);
+
+                if (availableUser) {
+                    const callRef = db.ref(`calls/${availableUser}`);
+                    callRef.set({ offerBy: userRef.key });
+                    setupWebRTC(callRef);
+                } else {
+                    db.ref(`calls/${userRef.key}`).on("value", (snapshot) => {
+                        const data = snapshot.val();
+                        if (data && data.offerBy) {
+                            setupWebRTC(db.ref(`calls/${data.offerBy}`), true);
+                        }
+                    });
+                }
+            });
+        }
+
+        function setupWebRTC(callRef, isCaller = false) {
+            peerConnection = new RTCPeerConnection(servers);
+            localStream.getTracks().forEach(track => peerConnection.addTrack(track, localStream));
+
+            peerConnection.ontrack = (event) => {
+                remoteVideo.srcObject = event.streams[0];
+            };
+
+            peerConnection.onicecandidate = (event) => {
+                if (event.candidate) {
+                    callRef.child("candidates").push(event.candidate.toJSON());
+                }
+            };
+
+            if (isCaller) {
+                peerConnection.createOffer().then((offer) => {
+                    peerConnection.setLocalDescription(offer);
+                    callRef.set({ offer });
+                });
+
+                callRef.child("answer").on("value", (snapshot) => {
+                    if (snapshot.exists()) {
+                        peerConnection.setRemoteDescription(new RTCSessionDescription(snapshot.val()));
+                    }
+                });
+
+                callRef.child("candidates").on("child_added", (snapshot) => {
+                    peerConnection.addIceCandidate(new RTCIceCandidate(snapshot.val()));
+                });
+            } else {
+                callRef.child("offer").on("value", async (snapshot) => {
+                    if (!snapshot.exists()) return;
+                    peerConnection.setRemoteDescription(new RTCSessionDescription(snapshot.val()));
+                    const answer = await peerConnection.createAnswer();
+                    peerConnection.setLocalDescription(answer);
+                    callRef.child("answer").set(answer);
+                });
+
+                callRef.child("candidates").on("child_added", (snapshot) => {
+                    peerConnection.addIceCandidate(new RTCIceCandidate(snapshot.val()));
+                });
+            }
+        }
+
+        startVideo();
+        startCallBtn.addEventListener("click", startCall);
+    </script>
+
+</body>
+</html>
