@@ -1,0 +1,117 @@
+[
+    {
+        "name": "0",
+        "url": ".\/0\/",
+        "icon": "icon.png"
+    },
+    {
+        "name": "a",
+        "url": ".\/a\/",
+        "icon": "icon.png"
+    },
+    {
+        "name": "about",
+        "url": ".\/about\/",
+        "icon": "icon.png"
+    },
+    {
+        "name": "boom",
+        "url": ".\/boom\/",
+        "icon": "icon.png"
+    },
+    {
+        "name": "cam",
+        "url": ".\/cam\/",
+        "icon": "icon.png"
+    },
+    {
+        "name": "contact",
+        "url": ".\/contact\/",
+        "icon": "icon.png"
+    },
+    {
+        "name": "cronjob",
+        "url": ".\/cronjob\/",
+        "icon": "icon.png"
+    },
+    {
+        "name": "disclaimer",
+        "url": ".\/disclaimer\/",
+        "icon": "icon.png"
+    },
+    {
+        "name": "favicon",
+        "url": ".\/favicon\/",
+        "icon": "icon.png"
+    },
+    {
+        "name": "gemini",
+        "url": ".\/gemini\/",
+        "icon": "icon.png"
+    },
+    {
+        "name": "keys",
+        "url": ".\/keys\/",
+        "icon": "icon.png"
+    },
+    {
+        "name": "privacy",
+        "url": ".\/privacy\/",
+        "icon": "icon.png"
+    },
+    {
+        "name": "st",
+        "url": ".\/st\/",
+        "icon": "icon.png"
+    },
+    {
+        "name": "terms",
+        "url": ".\/terms\/",
+        "icon": "icon.png"
+    },
+    {
+        "name": ".tmb",
+        "url": ".\/.tmb\/",
+        "icon": "icon.png"
+    },
+    {
+        "name": "tools",
+        "url": ".\/tools\/",
+        "icon": "icon.png"
+    },
+    {
+        "name": "vcall",
+        "url": ".\/vcall\/",
+        "icon": "icon.png"
+    },
+    {
+        "name": "vstorekaios",
+        "url": ".\/vstorekaios\/",
+        "icon": "icon.png"
+    },
+    {
+        "name": ".well-known",
+        "url": ".\/.well-known\/",
+        "icon": "icon.png"
+    },
+    {
+        "name": "wp-admin",
+        "url": ".\/wp-admin\/",
+        "icon": "icon.png"
+    },
+    {
+        "name": "wp-content",
+        "url": ".\/wp-content\/",
+        "icon": "icon.png"
+    },
+    {
+        "name": "wp-includes",
+        "url": ".\/wp-includes\/",
+        "icon": "icon.png"
+    },
+    {
+        "name": "x",
+        "url": ".\/x\/",
+        "icon": "icon.png"
+    }
+]
