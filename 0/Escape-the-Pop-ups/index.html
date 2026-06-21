@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Escape the Pop-ups! 🚨</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #ff5722;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            color: white;
+            margin-top: 20px;
+            font-size: 2em;
+        }
+        #game-container {
+            position: relative;
+            width: 100%;
+            height: 60vh;
+            overflow: hidden;
+        }
+        .popup {
+            position: absolute;
+            width: 200px;
+            height: 150px;
+            background-color: white;
+            border: 2px solid black;
+            padding: 10px;
+            text-align: center;
+            box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease-in-out;
+        }
+        .close-btn {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background-color: red;
+            color: white;
+            border: none;
+            font-size: 1.2em;
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+            border-radius: 50%;
+        }
+        #score {
+            font-size: 1.5em;
+            color: white;
+            margin-top: 20px;
+        }
+        #start-button {
+            font-size: 1.2em;
+            padding: 10px 20px;
+            background-color: green;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Escape the Pop-ups! 🚨</h1>
+    <p style="color:white;">Close as many pop-ups as possible in 30 seconds!</p>
+    <button id="start-button">Start Game</button>
+    <div id="game-container"></div>
+    <p id="score">Score: 0</p>
+
+    <script>
+        let score = 0;
+        let gameActive = false;
+        let timer;
+
+        const gameContainer = document.getElementById("game-container");
+        const scoreDisplay = document.getElementById("score");
+        const startButton = document.getElementById("start-button");
+
+        function createPopup() {
+            if (!gameActive) return;
+
+            const popup = document.createElement("div");
+            popup.classList.add("popup");
+
+            const fakeTexts = [
+                "💰 You won $1,000,000!",
+                "📢 Click here for a free iPhone!",
+                "🚨 Warning: Virus detected!",
+                "🎉 You are the lucky visitor!",
+                "😈 Your PC is hacked! Close fast!"
+            ];
+
+            popup.innerHTML = `
+                <button class="close-btn">X</button>
+                <p>${fakeTexts[Math.floor(Math.random() * fakeTexts.length)]}</p>
+            `;
+
+            const maxX = gameContainer.clientWidth - 220;
+            const maxY = gameContainer.clientHeight - 170;
+
+            popup.style.left = Math.random() * maxX + "px";
+            popup.style.top = Math.random() * maxY + "px";
+
+            if (Math.random() > 0.7) {
+                popup.style.width = "250px";
+                popup.style.height = "200px";
+            }
+
+            if (Math.random() > 0.5) {
+                popup.style.transform = `rotate(${Math.random() * 20 - 10}deg)`;
+            }
+
+            const closeButton = popup.querySelector(".close-btn");
+            closeButton.addEventListener("click", () => {
+                if (gameActive) {
+                    score++;
+                    scoreDisplay.textContent = "Score: " + score;
+                    popup.remove();
+                }
+            });
+
+            gameContainer.appendChild(popup);
+
+            if (Math.random() > 0.8) {
+                setTimeout(() => {
+                    if (gameActive && document.body.contains(popup)) {
+                        movePopup(popup);
+                    }
+                }, 1000);
+            }
+
+            setTimeout(createPopup, Math.random() * 2000 + 500);
+        }
+
+        function movePopup(popup) {
+            const maxX = gameContainer.clientWidth - 220;
+            const maxY = gameContainer.clientHeight - 170;
+
+            popup.style.left = Math.random() * maxX + "px";
+            popup.style.top = Math.random() * maxY + "px";
+        }
+
+        startButton.addEventListener("click", () => {
+            score = 0;
+            scoreDisplay.textContent = "Score: 0";
+            gameActive = true;
+            gameContainer.innerHTML = "";
+
+            createPopup();
+
+            timer = setTimeout(() => {
+                gameActive = false;
+                gameContainer.innerHTML = "";
+                showFinalMessage();
+            }, 30000); // 30 seconds
+        });
+
+        function showFinalMessage() {
+            let message = "";
+            if (score < 5) {
+                message = "😂 Too slow! Pop-ups win!";
+            } else if (score < 15) {
+                message = "😆 Not bad! But viruses still got you!";
+            } else if (score < 30) {
+                message = "🔥 You're a pop-up destroyer!";
+            } else {
+                message = "🤯 Are you a cybersecurity expert?!";
+            }
+            alert("Game Over! Your Score: " + score + "\n" + message);
+        }
+    </script>
+
+</body>
+</html>
