@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Funny Face Mask Camera 🎭</title>
+
+    <!-- Favicon -->
+    <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/3048/3048122.png" type="image/png">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background: #121212;
+            color: white;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            margin-top: 20px;
+            font-size: 2em;
+        }
+        #camera-container {
+            position: relative;
+            display: inline-block;
+            margin-top: 20px;
+        }
+        video, canvas {
+            border-radius: 10px;
+            width: 100%;
+            max-width: 600px;
+            box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        .controls {
+            margin-top: 20px;
+        }
+        button {
+            background: #ff4081;
+            color: white;
+            padding: 10px 20px;
+            font-size: 1.2em;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            margin: 10px;
+        }
+        button:hover {
+            background: #e91e63;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>🎭 Funny Face Mask Camera</h1>
+    <p>Activate your camera and apply TikTok-style face masks!</p>
+
+    <div id="camera-container">
+        <video id="video" autoplay></video>
+        <canvas id="canvas"></canvas>
+    </div>
+
+    <div class="controls">
+        <button onclick="changeMask()">🎭 Change Mask</button>
+        <button onclick="takePicture()">📸 Take Photo</button>
+    </div>
+
+    <script>
+        const video = document.getElementById('video');
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+
+        let masks = [
+            "https://cdn-icons-png.flaticon.com/512/3048/3048122.png",  // Funny face
+            "https://cdn-icons-png.flaticon.com/512/706/706830.png",    // Clown face
+            "https://cdn-icons-png.flaticon.com/512/4140/4140047.png",  // Sunglasses
+            "https://cdn-icons-png.flaticon.com/512/2922/2922510.png"   // Funny nose & mustache
+        ];
+        let currentMask = 0;
+
+        // Start Camera
+        navigator.mediaDevices.getUserMedia({ video: true })
+            .then(stream => {
+                video.srcObject = stream;
+            })
+            .catch(err => console.error("Camera access denied:", err));
+
+        function changeMask() {
+            currentMask = (currentMask + 1) % masks.length;
+        }
+
+        function takePicture() {
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+            // Load Mask Image
+            const img = new Image();
+            img.src = masks[currentMask];
+            img.onload = () => {
+                ctx.drawImage(img, canvas.width / 3, canvas.height / 6, 150, 150);
+            };
+        }
+    </script>
+
+</body>
+</html>
