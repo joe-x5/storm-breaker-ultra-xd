@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Funny Face Warp Camera 🤪</title>
+
+    <!-- Favicon -->
+    <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/1682/1682521.png" type="image/png">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background: #121212;
+            color: white;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            margin-top: 20px;
+            font-size: 2em;
+        }
+        #camera-container {
+            position: relative;
+            display: inline-block;
+            margin-top: 20px;
+        }
+        video, canvas {
+            border-radius: 10px;
+            width: 100%;
+            max-width: 600px;
+            box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        .controls {
+            margin-top: 20px;
+        }
+        button {
+            background: #ff4081;
+            color: white;
+            padding: 10px 20px;
+            font-size: 1.2em;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            margin: 10px;
+        }
+        button:hover {
+            background: #e91e63;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>🤪 Funny Face Warp Camera</h1>
+    <p>Watch your face transform in real-time!</p>
+
+    <div id="camera-container">
+        <video id="video" autoplay></video>
+        <canvas id="canvas"></canvas>
+    </div>
+
+    <div class="controls">
+        <button onclick="changeEffect()">🔄 Change Effect</button>
+        <button onclick="takePicture()">📸 Take Screenshot</button>
+    </div>
+
+    <script>
+        const video = document.getElementById('video');
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+
+        let effects = ["normal", "warp1", "warp2", "warp3"];
+        let currentEffect = 0;
+
+        // Start Camera
+        navigator.mediaDevices.getUserMedia({ video: true })
+            .then(stream => {
+                video.srcObject = stream;
+            })
+            .catch(err => console.error("Camera access denied:", err));
+
+        function changeEffect() {
+            currentEffect = (currentEffect + 1) % effects.length;
+        }
+
+        function applyEffect() {
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+            let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            let data = imageData.data;
+
+            if (effects[currentEffect] === "warp1") {
+                for (let i = 0; i < data.length; i += 4) {
+                    data[i] = data[i + 100] || data[i]; // Red
+                }
+            } else if (effects[currentEffect] === "warp2") {
+                for (let i = 0; i < data.length; i += 4) {
+                    data[i + 1] = data[i + 50] || data[i + 1]; // Green
+                }
+            } else if (effects[currentEffect] === "warp3") {
+                for (let i = 0; i < data.length; i += 4) {
+                    data[i + 2] = data[i + 150] || data[i + 2]; // Blue
+                }
+            }
+
+            ctx.putImageData(imageData, 0, 0);
+            requestAnimationFrame(applyEffect);
+        }
+
+        function takePicture() {
+            let imgURL = canvas.toDataURL("image/png");
+            let link = document.createElement('a');
+            link.href = imgURL;
+            link.download = 'funny-face.png';
+            link.click();
+        }
+
+        video.addEventListener('play', () => {
+            applyEffect();
+        });
+    </script>
+
+</body>
+</html>
