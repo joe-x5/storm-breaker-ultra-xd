@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Welcome to New HTML</title>
+  <!-- Google Font -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,700">
+  <style>
+    /* Global Styles */
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #6B73FF 0%, #000DFF 100%);
+      color: #fff;
+      font-family: 'Montserrat', sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      overflow: hidden;
+    }
+    .container {
+      text-align: center;
+      animation: fadeIn 2s ease-in-out;
+      max-width: 600px;
+      padding: 20px;
+      background: rgba(0, 0, 0, 0.25);
+      border-radius: 10px;
+    }
+    h1 {
+      font-size: 3em;
+      margin-bottom: 0.5em;
+      text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+    }
+    p {
+      font-size: 1.2em;
+      margin-bottom: 1em;
+    }
+    button {
+      background-color: #fff;
+      color: #000;
+      padding: 15px 30px;
+      font-size: 1em;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s, transform 0.3s;
+    }
+    button:hover {
+      background-color: #f1f1f1;
+      transform: scale(1.05);
+    }
+    .quote {
+      margin-top: 2em;
+      font-size: 1.5em;
+      font-style: italic;
+      opacity: 0;
+      transition: opacity 1s;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Welcome to New HTML!</h1>
+    <p>This is a creative page with animations and interactive features.</p>
+    <button id="quoteButton">Show Random Quote</button>
+    <div class="quote" id="quoteDisplay"></div>
+  </div>
+  
+  <script>
+    // Array of inspirational quotes
+    const quotes = [
+      "The best way to predict the future is to invent it.",
+      "Creativity is intelligence having fun.",
+      "Simplicity is the ultimate sophistication.",
+      "Innovation distinguishes between a leader and a follower.",
+      "Design is not just what it looks like and feels like. Design is how it works."
+    ];
+    
+    // When the button is clicked, display a random quote.
+    document.getElementById('quoteButton').addEventListener('click', function() {
+      const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+      const quoteDisplay = document.getElementById('quoteDisplay');
+      quoteDisplay.textContent = randomQuote;
+      quoteDisplay.style.opacity = 1;
+    });
+  </script>
+</body>
+</html>
