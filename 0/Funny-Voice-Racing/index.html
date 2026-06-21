@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Funny Voice Racing 🚗🎤</title>
+
+    <!-- Favicon -->
+    <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/1161/1161388.png" type="image/png">
+
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            background-color: #222;
+            color: white;
+            margin: 0;
+            overflow: hidden;
+        }
+        h1 {
+            margin-top: 10px;
+            font-size: 2em;
+        }
+        canvas {
+            display: block;
+            background: #555;
+            margin: 10px auto;
+            border-radius: 10px;
+        }
+        button {
+            background-color: #ff4081;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            margin: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 1.1em;
+        }
+        button:hover {
+            background-color: #e91e63;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>🚗 Funny Voice Racing Game 🏁🎤</h1>
+    <p>**Shout to move the car! Louder = Faster!**</p>
+    <button onclick="startGame()">🎙️ Start Game</button>
+    <p id="status">Waiting for voice input...</p>
+
+    <canvas id="gameCanvas" width="400" height="500"></canvas>
+
+    <script>
+        const canvas = document.getElementById("gameCanvas");
+        const ctx = canvas.getContext("2d");
+
+        let car = { x: 180, y: 400, width: 40, height: 60 };
+        let obstacles = [];
+        let gameRunning = false;
+        let voiceSpeed = 0;
+        let score = 0;
+
+        function drawCar() {
+            ctx.fillStyle = "red";
+            ctx.fillRect(car.x, car.y, car.width, car.height);
+        }
+
+        function drawObstacles() {
+            ctx.fillStyle = "black";
+            for (let obs of obstacles) {
+                ctx.fillRect(obs.x, obs.y, obs.width, obs.height);
+            }
+        }
+
+        function updateGame() {
+            if (!gameRunning) return;
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Move obstacles
+            for (let obs of obstacles) {
+                obs.y += 4;
+                if (obs.y > canvas.height) {
+                    obs.y = -50;
+                    obs.x = Math.random() * (canvas.width - 50);
+                    score += 10;
+                }
+            }
+
+            // Move car based on voice volume
+            car.y -= voiceSpeed;
+            if (car.y < 0) car.y = 0;
+            if (car.y > canvas.height - car.height) car.y = canvas.height - car.height;
+
+            drawCar();
+            drawObstacles();
+            document.getElementById("status").innerText = `Score: ${score} | Shout Louder to Move Faster!`;
+
+            // Collision detection
+            for (let obs of obstacles) {
+                if (
+                    car.x < obs.x + obs.width &&
+                    car.x + car.width > obs.x &&
+                    car.y < obs.y + obs.height &&
+                    car.y + car.height > obs.y
+                ) {
+                    gameRunning = false;
+                    alert("💥 CRASHED! Try Again! 😂");
+                    location.reload();
+                }
+            }
+
+            requestAnimationFrame(updateGame);
+        }
+
+        function startGame() {
+            gameRunning = true;
+            obstacles = [{ x: Math.random() * (canvas.width - 50), y: -50, width: 50, height: 50 }];
+            score = 0;
+            updateGame();
+            startVoiceRecognition();
+        }
+
+        function startVoiceRecognition() {
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            if (!SpeechRecognition) {
+                alert("Your browser doesn't support voice recognition! 😭");
+                return;
+            }
+
+            const recognition = new SpeechRecognition();
+            recognition.continuous = true;
+            recognition.interimResults = true;
+
+            recognition.onresult = (event) => {
+                let lastResult = event.results[event.results.length - 1];
+                let text = lastResult[0].transcript.trim();
+                let volume = text.length;
+
+                voiceSpeed = Math.min(volume, 10); // Louder voice = faster movement
+                console.log("Voice Speed:", voiceSpeed);
+            };
+
+            recognition.onerror = (event) => {
+                console.error("Voice recognition error:", event);
+            };
+
+            recognition.start();
+        }
+    </script>
+
+</body>
+</html>
