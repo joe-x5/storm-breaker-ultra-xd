@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Secret Agent: Operation LOL</title>
+  <!-- Favicon -->
+  <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/2922/2922510.png" type="image/png">
+  <style>
+    /* Basic Reset */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    body {
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(135deg, #1e3c72, #2a5298);
+      color: #fff;
+      text-align: center;
+      padding: 20px;
+    }
+    
+    h1 {
+      font-size: 2.5em;
+      margin-bottom: 10px;
+      text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+    }
+    
+    .mission-container {
+      max-width: 600px;
+      margin: 20px auto;
+      background: rgba(0,0,0,0.5);
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    }
+    
+    .mission-btn {
+      background: #ff4081;
+      border: none;
+      color: #fff;
+      padding: 15px 25px;
+      font-size: 1.2em;
+      border-radius: 10px;
+      cursor: pointer;
+      margin: 10px;
+      transition: background 0.3s;
+    }
+    
+    .mission-btn:hover {
+      background: #e91e63;
+    }
+    
+    #videoElement {
+      width: 100%;
+      max-width: 500px;
+      border: 5px solid #fff;
+      border-radius: 10px;
+      margin: 15px auto;
+      display: none;
+    }
+    
+    #status, #locationStatus, #voiceStatus, #finalMessage {
+      margin: 15px;
+      font-size: 1.2em;
+    }
+  </style>
+</head>
+<body>
+  <h1>Secret Agent: Operation LOL</h1>
+  <div class="mission-container">
+    <p>Agent, to activate your mission please grant camera, microphone, and location permissions.</p>
+    <button class="mission-btn" onclick="startMission()">Activate Mission</button>
+    <p id="status"></p>
+    
+    <!-- Video Feed -->
+    <video id="videoElement" autoplay playsinline></video>
+    
+    <!-- Voice Recording -->
+    <div id="voiceSection" style="display:none;">
+      <p>Now, speak your secret code phrase (recording for 3 seconds)...</p>
+      <button class="mission-btn" onclick="recordVoice()">Record Code</button>
+      <p id="voiceStatus"></p>
+    </div>
+    
+    <!-- Location -->
+    <div id="locationSection" style="display:none;">
+      <p id="locationStatus"></p>
+      <button class="mission-btn" onclick="completeMission()">Complete Mission</button>
+    </div>
+    
+    <p id="finalMessage"></p>
+  </div>
+  
+  <script>
+    let videoStream;
+    let recordedVoiceURL;
+    
+    // Request Camera, Mic, and Location Permissions
+    async function startMission() {
+      const status = document.getElementById("status");
+      status.innerText = "Activating mission...";
+      
+      try {
+        // Request camera and mic
+        videoStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+        const videoElement = document.getElementById("videoElement");
+        videoElement.srcObject = videoStream;
+        videoElement.style.display = "block";
+        status.innerText = "Camera and microphone activated!";
+        
+        // Request location
+        navigator.geolocation.getCurrentPosition(position => {
+          const { latitude, longitude } = position.coords;
+          document.getElementById("locationStatus").innerText =
+            `Top-secret coordinates: [Lat: ${latitude.toFixed(4)}, Lon: ${longitude.toFixed(4)}]`;
+          // Reveal location section and voice section
+          document.getElementById("locationSection").style.display = "block";
+          document.getElementById("voiceSection").style.display = "block";
+        }, error => {
+          document.getElementById("locationStatus").innerText = "Location access denied. Mission cannot proceed!";
+        });
+      } catch (err) {
+        status.innerText = "Error: Please grant all permissions to start the mission.";
+        console.error("Permission error:", err);
+      }
+    }
+    
+    // Record voice for 3 seconds using MediaRecorder
+    function recordVoice() {
+      const voiceStatus = document.getElementById("voiceStatus");
+      voiceStatus.innerText = "Recording secret code...";
+      
+      const mediaRecorder = new MediaRecorder(videoStream);
+      let chunks = [];
+      
+      mediaRecorder.ondataavailable = e => chunks.push(e.data);
+      mediaRecorder.onstop = () => {
+        const blob = new Blob(chunks, { type: 'audio/webm' });
+        recordedVoiceURL = URL.createObjectURL(blob);
+        voiceStatus.innerText = "Secret code recorded! Your voice is your key.";
+      };
+      
+      mediaRecorder.start();
+      setTimeout(() => mediaRecorder.stop(), 3000);
+    }
+    
+    // Complete mission: Display final funny message
+    function completeMission() {
+      const finalMessage = document.getElementById("finalMessage");
+      finalMessage.innerText = "Mission Accomplished, Agent! You're a legend! 😎🎉";
+    }
+  </script>
+</body>
+</html>
