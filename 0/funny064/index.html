@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Funny Permission Request</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      background-color: #fffae6;
+      color: #333;
+      text-align: center;
+      padding: 50px;
+    }
+    h1 {
+      font-size: 3em;
+      margin-bottom: 20px;
+    }
+    p {
+      font-size: 1.2em;
+    }
+    button {
+      font-size: 1.2em;
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      border: none;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    .funny-image {
+      width: 200px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Hey There, Superstar!</h1>
+  <p>We need your permission to do something really cool (and funny)!</p>
+  <button id="permButton">Allow Permission</button>
+  <p id="status"></p>
+  <img src="https://via.placeholder.com/200?text=Funny+Image" alt="Funny Image" class="funny-image">
+  
+  <script>
+    // When the button is clicked, request notification permission.
+    document.getElementById('permButton').addEventListener('click', function() {
+      if ('Notification' in window) {
+        Notification.requestPermission().then(function(permission) {
+          if (permission === 'granted') {
+            document.getElementById('status').textContent = 'Yay! Permission granted. You rock!';
+            new Notification('Thanks, Superstar!', { body: 'You just made our day extra awesome!' });
+          } else {
+            document.getElementById('status').textContent = 'Oh no! You denied permission. But you’re still amazing!';
+          }
+        });
+      } else {
+        document.getElementById('status').textContent = 'Oops! Your browser does not support notifications!';
+      }
+    });
+  </script>
+</body>
+</html>
