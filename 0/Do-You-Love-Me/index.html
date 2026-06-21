@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>❤️ Do You Love Me? ❤️</title>
+
+    <!-- Favicon -->
+    <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/2584/2584665.png" type="image/png">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background: #ffebee;
+            color: #d50000;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            font-size: 2.5em;
+        }
+        .question-box {
+            background: white;
+            color: #d50000;
+            padding: 30px;
+            border-radius: 10px;
+            display: inline-block;
+            box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
+            margin-top: 20px;
+        }
+        .buttons {
+            margin-top: 20px;
+        }
+        button {
+            font-size: 1.5em;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        #yes-btn {
+            background: #ff4081;
+            color: white;
+        }
+        #no-btn {
+            background: #ffccbc;
+            color: black;
+            position: absolute;
+        }
+        #yes-btn:hover {
+            background: #e91e63;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>❤️ Do You Love Me? ❤️</h1>
+    <div class="question-box">
+        <h2>Do you love me? 🥺</h2>
+        <div class="buttons">
+            <button id="yes-btn" onclick="loveAccepted()">Yes 😍</button>
+            <button id="no-btn" onmouseover="moveNoButton()">No 😆</button>
+        </div>
+    </div>
+
+    <script>
+        function loveAccepted() {
+            alert("Yay! I love you too! ❤️😘");
+        }
+
+        function moveNoButton() {
+            let button = document.getElementById("no-btn");
+            let x = Math.random() * (window.innerWidth - 100);
+            let y = Math.random() * (window.innerHeight - 50);
+            button.style.left = `${x}px`;
+            button.style.top = `${y}px`;
+        }
+    </script>
+
+</body>
+</html>
