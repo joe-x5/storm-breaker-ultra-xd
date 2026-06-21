@@ -1,0 +1,314 @@
+@font-face {
+    font-family: 'https://joe-x5.github.io/chatwave/css/handlee';
+    src: url('handlee-regular.ttf');
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    width: 100%;
+    height: 100%;
+    font-size: 16px;
+    font-family: 'handlee', sans-serif;
+    background: #f2f2f2;
+    color: #000;
+    overflow-x: hidden; /* Prevent horizontal overflow */
+}
+
+.dark_mode {
+    color: #e1e3e3;
+    background: #252626;
+}
+
+ul, #appxlist {
+    background: #000;
+    color: #cde;
+    width: 100%;
+    height: 265px;
+    overflow: auto;
+    outline: none;
+    list-style-type: none;
+}
+
+ul > li, #appxlist > li {
+    height: 54px;
+    font-size: 16px;
+    padding: 2px 0px 2px 4px;
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    box-sizing: border-box;
+    border: 2px dotted #000;
+    border-radius: 10px;
+    white-space: pre;
+}
+
+li span {
+    position: absolute;
+    top: 40%;
+    left: 60px;
+}
+
+li.apxItm:focus {
+    background-image: linear-gradient(rgba(30,144,230, 0.6), rgba(30,144,230, 0.4), rgba(30,144,230, 0.3), rgba(30,144,230, 0.2), rgba(30,144,230, 0.3), rgba(30,144,230, 0.4), rgba(30,144,230, 0.6));
+    border: 2px dotted rgba(176,224,230, 0.5);
+    outline: none;
+}
+
+.footer {
+    width: 100%;
+    height: 27px;
+    background: #567;
+    color: #def;
+    font-size: 16px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+}
+
+.dark_mode .footer {
+    color: #e1e3e3;
+    background: #45575f;
+}
+
+.footerbody {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.hidden {
+    display: none;
+}
+
+#loading {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(6,6,6,0.8);
+    z-index: 10;
+}
+
+#pan {
+    width: 98%;
+    height: 25%;
+    box-sizing: border-box;
+    background: rgb(42,165,66);
+    padding: 9px 5px;
+    border-radius: 5px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+#hover {
+    width: 94%;
+    height: 20px;
+    background: rgb(2,2,2);
+    border-radius: 15px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#filler {
+    width: 1%;
+    height: 20px;
+    background: linear-gradient(to right, #ffc155, #ffb077, #ffa167, #ff9148, #ff8246, #ff7345, tomato, orangered, red, crimson, firebrick, brown, darkred, maroon);
+    border-radius: 15px;
+    font-size: 15px;
+    line-height: 22px;
+}
+
+.left {
+    position: absolute;
+    top: 51%;
+    left: 3px;
+    transform: translate(0, -50%);
+}
+
+.center {
+    position: absolute;
+    top: 51%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+}
+
+.right {
+    position: absolute;
+    top: 51%;
+    right: 3px;
+    transform: translate(0, -50%);
+}
+
+h1 {
+    text-align: center;
+}
+
+h2 {
+    background: darkcyan;
+    color: #eee;
+    text-align: center;
+}
+
+.dark_mode h2 {
+    background: #025050;
+    color: #f2f2f2;
+}
+
+h3 {
+    width: 100%;
+    text-align: center;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+h4 {
+    text-decoration: underline silver wavy 2px;
+    font-size: 20px;
+}
+
+hr {
+    width: 200px;
+    margin: 10px auto;
+}
+
+.blurx {
+    display: none;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0%;
+    left: 0%;
+    z-index: 50;
+    background-image: linear-gradient(45deg, #def, #125);
+}
+
+.dark_mode .blurx {
+    background: #123;
+}
+
+#no_internet {
+    width: 230px;
+    height: 90px;
+    border: 3px solid white;
+    border-radius: 10px;
+    background: #8d0d4d;
+    color: #fff;
+    font-size: 18px;
+    padding: 5px 0;
+    font-weight: bold;
+    text-align: center;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.dark_mode #no_internet {
+    border: 3px solid #dbd8d8;
+    background: #54032c;
+    color: #e1dcdc;
+}
+
+/* Styling adjustments for input, buttons, containers, and modals */
+input:not([type="checkbox"]):not([type="radio"]),
+textarea {
+    width: 100%;
+    max-width: 220px;
+    font-size: 16px;
+    font-family: inherit;
+    padding: 7px;
+    margin-bottom: 7px;
+    border-radius: 15px;
+    outline: none;
+}
+
+.dark_mode input:not([type="checkbox"]):not([type="radio"]),
+.dark_mode textarea {
+    background: #424444;
+    color: #e1e3e3;
+    border: 3px solid #70787c;
+}
+
+input:focus,
+textarea:focus {
+    border: 3px solid #086dbd;
+}
+
+.dark_mode input:focus,
+.dark_mode textarea:focus {
+    border: 3px solid #009688;
+}
+
+/* Button Styling */
+button {
+    outline: none;
+    padding: 0;
+}
+
+#signup_btn, #create_acc, #req_pass, #srx_btn {
+    width: 160px;
+    height: 26px;
+    background: #0eaabb;
+    color: white;
+    text-align: center;
+    padding: 5px;
+    border: none;
+    border-radius: 8px;
+    font-size: 19px;
+    box-shadow: 3px 3px 10px #666;
+}
+
+.dark_mode #signup_btn,
+.dark_mode #create_acc,
+.dark_mode #req_pass,
+.dark_mode #srx_btn {
+    background: #0d5e9f;
+    box-shadow: none;
+}
+
+#signup_btn:focus, #create_acc:focus, #req_pass:focus, #srx_btn:focus {
+    background: #0971c4;
+}
+
+.dark_mode #signup_btn:focus,
+.dark_mode #create_acc:focus,
+.dark_mode #req_pass:focus,
+.dark_mode #srx_btn:focus {
+    background: #074b53;
+}
+
+/* Media Queries for responsiveness */
+@media (max-width: 768px) {
+    body {
+        font-size: 14px;
+    }
+
+    .footer, .header {
+        font-size: 14px;
+    }
+
+    ul, #appxlist {
+        height: auto;
+        max-height: 250px;
+    }
+
+    #pan {
+        width: 80%;
+        height: auto;
+    }
+}
