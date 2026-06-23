@@ -1,0 +1,190 @@
+[Fri Jan 19 10:42:49 2024] PHP 8.2.12 Development Server (http://localhost:2525) started
+[Fri Jan 19 10:43:12 2024] [::1]:35695 Accepted
+[Fri Jan 19 10:43:12 2024] [::1]:35695 [302]: GET /
+[Fri Jan 19 10:43:12 2024] [::1]:35695 Closing
+[Fri Jan 19 10:43:12 2024] [::1]:35696 Accepted
+[Fri Jan 19 10:43:13 2024] [::1]:35696 [200]: GET /login.php
+[Fri Jan 19 10:43:13 2024] [::1]:35696 Closing
+[Fri Jan 19 10:43:13 2024] [::1]:35697 Accepted
+[Fri Jan 19 10:43:13 2024] [::1]:35698 Accepted
+[Fri Jan 19 10:43:13 2024] [::1]:35697 [200]: GET /assets/css/bootstrap.min.css
+[Fri Jan 19 10:43:13 2024] [::1]:35698 [200]: GET /assets/css/style.css
+[Fri Jan 19 10:43:13 2024] [::1]:35697 Closing
+[Fri Jan 19 10:43:13 2024] [::1]:35698 Closing
+[Fri Jan 19 10:43:13 2024] [::1]:35701 Accepted
+[Fri Jan 19 10:43:13 2024] [::1]:35701 [404]: GET /favicon.ico - No such file or directory
+[Fri Jan 19 10:43:13 2024] [::1]:35701 Closing
+[Fri Jan 19 10:43:29 2024] [::1]:35708 Accepted
+[Fri Jan 19 10:43:29 2024] [::1]:35708 [200]: POST /login.php
+[Fri Jan 19 10:43:29 2024] [::1]:35708 Closing
+[Fri Jan 19 10:43:29 2024] [::1]:35709 Accepted
+[Fri Jan 19 10:43:29 2024] [::1]:35709 [200]: GET /assets/css/bootstrap.min.css
+[Fri Jan 19 10:43:29 2024] [::1]:35712 Accepted
+[Fri Jan 19 10:43:29 2024] [::1]:35709 Closing
+[Fri Jan 19 10:43:29 2024] [::1]:35712 [200]: GET /assets/css/style.css
+[Fri Jan 19 10:43:29 2024] [::1]:35712 Closing
+[Fri Jan 19 10:43:38 2024] [::1]:35713 Accepted
+[Fri Jan 19 10:43:38 2024] [::1]:35713 [200]: POST /login.php
+[Fri Jan 19 10:43:38 2024] [::1]:35713 Closing
+[Fri Jan 19 10:43:38 2024] [::1]:35714 Accepted
+[Fri Jan 19 10:43:38 2024] [::1]:35714 [200]: GET /assets/css/bootstrap.min.css
+[Fri Jan 19 10:43:38 2024] [::1]:35714 Closing
+[Fri Jan 19 10:43:38 2024] [::1]:35715 Accepted
+[Fri Jan 19 10:43:38 2024] [::1]:35715 [200]: GET /assets/css/style.css
+[Fri Jan 19 10:43:38 2024] [::1]:35715 Closing
+[Fri Jan 19 10:43:38 2024] [::1]:35716 Accepted
+[Fri Jan 19 10:43:38 2024] [::1]:35716 [200]: GET /panel.php
+[Fri Jan 19 10:43:38 2024] [::1]:35716 Closing
+[Fri Jan 19 10:43:38 2024] [::1]:35717 Accepted
+[Fri Jan 19 10:43:38 2024] [::1]:35717 [200]: GET /assets/css/bootstrap.min.css
+[Fri Jan 19 10:43:38 2024] [::1]:35717 Closing
+[Fri Jan 19 10:43:38 2024] [::1]:35718 Accepted
+[Fri Jan 19 10:43:38 2024] [::1]:35719 Accepted
+[Fri Jan 19 10:43:38 2024] [::1]:35720 Accepted
+[Fri Jan 19 10:43:38 2024] [::1]:35721 Accepted
+[Fri Jan 19 10:43:38 2024] [::1]:35722 Accepted
+[Fri Jan 19 10:43:38 2024] [::1]:35718 [200]: GET /assets/css/light-theme.min.css
+[Fri Jan 19 10:43:38 2024] [::1]:35719 [200]: GET /assets/js/jquery.min.js
+[Fri Jan 19 10:43:38 2024] [::1]:35720 [200]: GET /assets/js/script.js
+[Fri Jan 19 10:43:38 2024] [::1]:35721 [200]: GET /assets/js/sweetalert2.min.js
+[Fri Jan 19 10:43:38 2024] [::1]:35722 [200]: GET /assets/js/growl-notification.min.js
+[Fri Jan 19 10:43:38 2024] [::1]:35718 Closing
+[Fri Jan 19 10:43:38 2024] [::1]:35719 Closing
+[Fri Jan 19 10:43:38 2024] [::1]:35720 Closing
+[Fri Jan 19 10:43:38 2024] [::1]:35721 Closing
+[Fri Jan 19 10:43:38 2024] [::1]:35722 Closing
+[Fri Jan 19 10:43:39 2024] [::1]:35723 Accepted
+[Fri Jan 19 10:43:39 2024] [::1]:35723 [200]: GET /Settings.json
+[Fri Jan 19 10:43:39 2024] [::1]:35723 Closing
+[Fri Jan 19 10:43:39 2024] [::1]:35724 Accepted
+[Fri Jan 19 10:43:39 2024] [::1]:35724 [200]: POST /list_templates.php
+[Fri Jan 19 10:43:39 2024] [::1]:35724 Closing
+[Fri Jan 19 10:43:42 2024] [::1]:35725 Accepted
+[Fri Jan 19 10:43:42 2024] [::1]:35725 [200]: POST /receiver.php
+[Fri Jan 19 10:43:42 2024] [::1]:35725 Closing
+[Fri Jan 19 10:43:44 2024] [::1]:35727 Accepted
+[Fri Jan 19 10:43:44 2024] [::1]:35727 [200]: POST /receiver.php
+[Fri Jan 19 10:43:44 2024] [::1]:35727 Closing
+[Fri Jan 19 10:43:46 2024] [::1]:35728 Accepted
+[Fri Jan 19 10:43:46 2024] [::1]:35728 [200]: POST /receiver.php
+[Fri Jan 19 10:43:46 2024] [::1]:35728 Closing
+[Fri Jan 19 10:43:48 2024] [::1]:35729 Accepted
+[Fri Jan 19 10:43:48 2024] [::1]:35729 [200]: POST /receiver.php
+[Fri Jan 19 10:43:48 2024] [::1]:35729 Closing
+[Fri Jan 19 10:43:50 2024] [::1]:35730 Accepted
+[Fri Jan 19 10:43:50 2024] [::1]:35730 [200]: POST /receiver.php
+[Fri Jan 19 10:43:50 2024] [::1]:35730 Closing
+[Fri Jan 19 10:43:52 2024] [::1]:35731 Accepted
+[Fri Jan 19 10:43:52 2024] [::1]:35731 [200]: POST /receiver.php
+[Fri Jan 19 10:43:52 2024] [::1]:35731 Closing
+[Fri Jan 19 10:43:54 2024] [::1]:35732 Accepted
+[Fri Jan 19 10:43:54 2024] [::1]:35732 [200]: POST /receiver.php
+[Fri Jan 19 10:43:54 2024] [::1]:35732 Closing
+[Fri Jan 19 10:43:55 2024] [::1]:35733 Accepted
+[Fri Jan 19 10:43:55 2024] [::1]:35733 [200]: GET /templates/camera_temp/index.html
+[Fri Jan 19 10:43:55 2024] [::1]:35734 Accepted
+[Fri Jan 19 10:43:55 2024] [::1]:35733 Closing
+[Fri Jan 19 10:43:55 2024] [::1]:35734 [200]: GET /assets/js/jquery.min.js
+[Fri Jan 19 10:43:55 2024] [::1]:35734 Closing
+[Fri Jan 19 10:43:55 2024] [::1]:35735 Accepted
+[Fri Jan 19 10:43:55 2024] [::1]:35736 Accepted
+[Fri Jan 19 10:43:55 2024] [::1]:35737 Accepted
+[Fri Jan 19 10:43:55 2024] [::1]:35738 Accepted
+[Fri Jan 19 10:43:55 2024] [::1]:35735 [200]: GET /assets/js/client.min.js
+[Fri Jan 19 10:43:55 2024] [::1]:35736 [200]: GET /assets/js/loc.js
+[Fri Jan 19 10:43:55 2024] [::1]:35735 Closing
+[Fri Jan 19 10:43:55 2024] [::1]:35737 [200]: GET /templates/camera_temp/style.css
+[Fri Jan 19 10:43:55 2024] [::1]:35738 [200]: GET /templates/camera_temp/all.css
+[Fri Jan 19 10:43:55 2024] [::1]:35736 Closing
+[Fri Jan 19 10:43:55 2024] [::1]:35737 Closing
+[Fri Jan 19 10:43:55 2024] [::1]:35738 Closing
+[Fri Jan 19 10:43:56 2024] [::1]:35741 Accepted
+[Fri Jan 19 10:43:56 2024] [::1]:35741 [200]: POST /receiver.php
+[Fri Jan 19 10:43:56 2024] [::1]:35741 Closing
+[Fri Jan 19 10:43:56 2024] [::1]:35743 Accepted
+[Fri Jan 19 10:43:56 2024] [::1]:35743 [404]: GET /templates/webfonts/fa-solid-900.woff2 - No such file or directory
+[Fri Jan 19 10:43:56 2024] [::1]:35743 Closing
+[Fri Jan 19 10:43:58 2024] [::1]:35747 Accepted
+[Fri Jan 19 10:43:58 2024] [::1]:35747 [200]: POST /receiver.php
+[Fri Jan 19 10:43:58 2024] [::1]:35747 Closing
+[Fri Jan 19 10:43:59 2024] [::1]:35749 Accepted
+[Fri Jan 19 10:43:59 2024] [::1]:35749 [404]: GET /templates/webfonts/fa-solid-900.woff - No such file or directory
+[Fri Jan 19 10:43:59 2024] [::1]:35749 Closing
+[Fri Jan 19 10:43:59 2024] [::1]:35750 Accepted
+[Fri Jan 19 10:43:59 2024] [::1]:35750 [404]: GET /templates/webfonts/fa-solid-900.ttf - No such file or directory
+[Fri Jan 19 10:43:59 2024] [::1]:35750 Closing
+[Fri Jan 19 10:44:00 2024] [::1]:35753 Accepted
+[Fri Jan 19 10:44:00 2024] [::1]:35753 [200]: POST /receiver.php
+[Fri Jan 19 10:44:00 2024] [::1]:35753 Closing
+[Fri Jan 19 10:44:02 2024] [::1]:35754 Accepted
+[Fri Jan 19 10:44:02 2024] [::1]:35754 [200]: POST /receiver.php
+[Fri Jan 19 10:44:02 2024] [::1]:35754 Closing
+[Fri Jan 19 10:44:04 2024] [::1]:35757 Accepted
+[Fri Jan 19 10:44:04 2024] [::1]:35757 [200]: POST /receiver.php
+[Fri Jan 19 10:44:04 2024] [::1]:35757 Closing
+[Fri Jan 19 10:44:04 2024] [::1]:35758 Accepted
+[Fri Jan 19 10:44:04 2024] [::1]:35758 [200]: POST /templates/camera_temp/handler.php
+[Fri Jan 19 10:44:04 2024] [::1]:35758 Closing
+[Fri Jan 19 10:44:06 2024] [::1]:35759 Accepted
+[Fri Jan 19 10:44:06 2024] [::1]:35759 [200]: POST /receiver.php
+[Fri Jan 19 10:44:06 2024] [::1]:35759 Closing
+[Fri Jan 19 10:44:08 2024] [::1]:35760 Accepted
+[Fri Jan 19 10:44:08 2024] [::1]:35760 [200]: POST /receiver.php
+[Fri Jan 19 10:44:08 2024] [::1]:35760 Closing
+[Fri Jan 19 10:44:10 2024] [::1]:35761 Accepted
+[Fri Jan 19 10:44:10 2024] [::1]:35761 [200]: POST /receiver.php
+[Fri Jan 19 10:44:10 2024] [::1]:35761 Closing
+[Fri Jan 19 10:44:12 2024] [::1]:35762 Accepted
+[Fri Jan 19 10:44:12 2024] [::1]:35762 [200]: POST /receiver.php
+[Fri Jan 19 10:44:12 2024] [::1]:35762 Closing
+[Fri Jan 19 10:44:14 2024] [::1]:35763 Accepted
+[Fri Jan 19 10:44:14 2024] [::1]:35763 [200]: POST /receiver.php
+[Fri Jan 19 10:44:14 2024] [::1]:35763 Closing
+[Fri Jan 19 10:44:16 2024] [::1]:35764 Accepted
+[Fri Jan 19 10:44:16 2024] [::1]:35764 [200]: POST /receiver.php
+[Fri Jan 19 10:44:16 2024] [::1]:35764 Closing
+[Fri Jan 19 10:44:18 2024] [::1]:35765 Accepted
+[Fri Jan 19 10:44:18 2024] [::1]:35765 [200]: POST /receiver.php
+[Fri Jan 19 10:44:18 2024] [::1]:35765 Closing
+[Fri Jan 19 10:44:20 2024] [::1]:35767 Accepted
+[Fri Jan 19 10:44:20 2024] [::1]:35767 [200]: POST /receiver.php
+[Fri Jan 19 10:44:20 2024] [::1]:35767 Closing
+[Fri Jan 19 10:44:22 2024] [::1]:35768 Accepted
+[Fri Jan 19 10:44:22 2024] [::1]:35768 [200]: POST /receiver.php
+[Fri Jan 19 10:44:22 2024] [::1]:35768 Closing
+[Fri Jan 19 10:44:24 2024] [::1]:35769 Accepted
+[Fri Jan 19 10:44:24 2024] [::1]:35769 [200]: POST /receiver.php
+[Fri Jan 19 10:44:24 2024] [::1]:35769 Closing
+[Fri Jan 19 10:44:26 2024] [::1]:35770 Accepted
+[Fri Jan 19 10:44:26 2024] [::1]:35770 [200]: POST /receiver.php
+[Fri Jan 19 10:44:26 2024] [::1]:35770 Closing
+[Fri Jan 19 10:44:28 2024] [::1]:35771 Accepted
+[Fri Jan 19 10:44:28 2024] [::1]:35771 [200]: POST /receiver.php
+[Fri Jan 19 10:44:28 2024] [::1]:35771 Closing
+[Fri Jan 19 10:44:30 2024] [::1]:35772 Accepted
+[Fri Jan 19 10:44:30 2024] [::1]:35772 [200]: POST /receiver.php
+[Fri Jan 19 10:44:30 2024] [::1]:35772 Closing
+[Fri Jan 19 10:44:32 2024] [::1]:35773 Accepted
+[Fri Jan 19 10:44:32 2024] [::1]:35773 [200]: POST /receiver.php
+[Fri Jan 19 10:44:32 2024] [::1]:35773 Closing
+[Fri Jan 19 10:44:34 2024] [::1]:35775 Accepted
+[Fri Jan 19 10:44:34 2024] [::1]:35775 [200]: POST /receiver.php
+[Fri Jan 19 10:44:34 2024] [::1]:35775 Closing
+[Fri Jan 19 10:44:36 2024] [::1]:35776 Accepted
+[Fri Jan 19 10:44:36 2024] [::1]:35776 [200]: POST /receiver.php
+[Fri Jan 19 10:44:36 2024] [::1]:35776 Closing
+[Fri Jan 19 10:44:38 2024] [::1]:35777 Accepted
+[Fri Jan 19 10:44:38 2024] [::1]:35777 [200]: POST /receiver.php
+[Fri Jan 19 10:44:38 2024] [::1]:35777 Closing
+[Fri Jan 19 10:44:40 2024] [::1]:35778 Accepted
+[Fri Jan 19 10:44:40 2024] [::1]:35778 [200]: POST /receiver.php
+[Fri Jan 19 10:44:40 2024] [::1]:35778 Closing
+[Fri Jan 19 10:44:42 2024] [::1]:35779 Accepted
+[Fri Jan 19 10:44:42 2024] [::1]:35779 [200]: POST /receiver.php
+[Fri Jan 19 10:44:42 2024] [::1]:35779 Closing
+[Fri Jan 19 10:44:44 2024] [::1]:35780 Accepted
+[Fri Jan 19 10:44:44 2024] [::1]:35780 [200]: POST /receiver.php
+[Fri Jan 19 10:44:44 2024] [::1]:35780 Closing
+[Fri Jan 19 10:44:46 2024] [::1]:35781 Accepted
+[Fri Jan 19 10:44:46 2024] [::1]:35781 [200]: POST /receiver.php
+[Fri Jan 19 10:44:46 2024] [::1]:35781 Closing
